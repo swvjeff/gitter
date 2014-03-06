@@ -73,8 +73,17 @@ class Client
         if (!$process->isSuccessful()) {
             throw new \RuntimeException($process->getErrorOutput());
         }
+        
+        /// Standard output
+        $output = $process->getOutput();
 
-        return $process->getOutput();
+        /// The error output holds all the GIT push progress data
+        if($errorOutput = $process->getErrorOutput())
+        {
+            $output = $process->getErrorOutput().$output;
+        }
+
+        return $output;
     }
 
     public function getVersion()
