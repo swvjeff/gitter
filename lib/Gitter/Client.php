@@ -60,13 +60,13 @@ class Client
         return new Repository($path, $this);
     }
 
-    public function run($repository, $command, $environment = array())
+    public function run($repository, $command)
     {
         if (version_compare($this->getVersion(), '1.7.2', '>=')) {
             $command = '-c "color.ui"=false ' . $command;
         }
 
-        $process = new Process($this->getPath() . ' ' . $command, $repository->getPath(), $environment);
+        $process = new Process($this->getPath() . ' ' . $command, $repository->getPath());
         $process->setTimeout(180);
         $process->run();
 
